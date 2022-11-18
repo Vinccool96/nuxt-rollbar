@@ -4,6 +4,6 @@ import NuxtRollbar from ".."
 export default defineNuxtConfig({
   modules: [NuxtRollbar],
   nuxtRollbar: {
-    addPlugin: true,
+    config: {},
   },
 })
