@@ -24,9 +24,6 @@ dist
 .env
 .netlify
 
-# Env
-.env
-
 # Testing
 reports
 coverage
@@ -54,3 +51,5 @@ coverage
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.vitest-result.json
