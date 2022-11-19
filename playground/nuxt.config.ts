@@ -6,4 +6,11 @@ export default defineNuxtConfig({
   nuxtRollbar: {
     config: {},
   },
+
+  runtimeConfig: {
+    public: {
+      rollbarServerKey: "",
+      rollbarClientKey: "",
+    },
+  },
 })

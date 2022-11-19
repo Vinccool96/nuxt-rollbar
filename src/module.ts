@@ -1,7 +1,7 @@
 import { fileURLToPath } from "url"
 import { resolve } from "path"
 
-import { defineNuxtModule, addPlugin, createResolver } from "@nuxt/kit"
+import { defineNuxtModule, addPlugin, createResolver,  } from "@nuxt/kit"
 import { Nuxt } from "@nuxt/schema"
 
 import consola from "consola"
@@ -25,13 +25,17 @@ export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: "nuxt-rollbar",
     configKey: "nuxtRollbar",
+    compatibility: {
+      // Semver version of supported nuxt versions
+      nuxt: "^3.0.0",
+    },
   },
   defaults: {
     clientAccessToken: getRollbarEnv("server_key") || null,
     serverAccessToken: getRollbarEnv("server_key") || null,
     config: {},
   },
-  setup(options: ModuleOptions, nuxt: Nuxt) {
+  setup(options: ModuleOptions, nuxt) {
     const isClientTokenValid = isTokenValid(options.clientAccessToken || null)
     const isServerTokenValid = isTokenValid(options.serverAccessToken || null)
 
@@ -39,10 +43,9 @@ export default defineNuxtModule<ModuleOptions>({
     //   return
     // }
 
-    const { resolve } = createResolver(import.meta.url)
+    const { resolve, resolvePath } = createResolver(import.meta.url)
     const runtimeDir = fileURLToPath(new URL("./runtime", import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
-
     addPlugin(resolve(runtimeDir, "plugin"))
   },
 })

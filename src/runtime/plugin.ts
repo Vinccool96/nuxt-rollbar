@@ -1,5 +1,6 @@
-import { defineNuxtPlugin } from "#app"
+import { defineNuxtPlugin, useRuntimeConfig } from "#app"
 
 export default defineNuxtPlugin((nuxtApp) => {
-  console.log("Plugin by my-module!")
+  const config = useRuntimeConfig()
+  console.log(JSON.stringify(config))
 })

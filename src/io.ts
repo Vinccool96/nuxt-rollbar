@@ -1,5 +1,3 @@
-import rollbar from 'rollbar';
-
 interface EnvTypes {
   server_key: string | undefined
   client_key: string | undefined
@@ -8,7 +6,7 @@ interface EnvTypes {
 type env = keyof EnvTypes
 
 function getEnv<T extends env>(name: T): EnvTypes[T] {
-  return process.env[`ROLLBAR_${name}`]
+  return process.env[`NUXT_PUBLIC_ROLLBAR_${name}`]
 }
 
 export interface RollbarEnvTypes {
