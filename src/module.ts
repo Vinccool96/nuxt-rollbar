@@ -7,17 +7,14 @@ import consola from "consola"
 import Rollbar from "rollbar"
 
 import { getRollbarEnv } from "./io"
+import { ModuleOptions } from "./config"
+
+export { ModuleOptions }
 
 const logger = consola.withScope("nuxt:rollbar")
 
 function isTokenValid(token: string | null): boolean {
   return token !== null && token.length > 0
-}
-
-export interface ModuleOptions {
-  clientAccessToken?: string | null
-  serverAccessToken?: string | null
-  config?: Rollbar.Configuration
 }
 
 export default defineNuxtModule<ModuleOptions>({

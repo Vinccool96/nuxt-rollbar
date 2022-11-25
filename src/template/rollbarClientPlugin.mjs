@@ -11,14 +11,18 @@ function isValidToken(token) {
   return typeof token === "string" && token.length > 0
 }
 
+const serverAccessToken = "<%= options.serverAccessToken %>"
+
 let serverRollbar
-if (isValidToken(<%= options.serverAccessToken %>)) {
-  serverRollbar = createRollbarInstance("<%= options.serverAccessToken %>")
+if (isValidToken(serverAccessToken)) {
+  serverRollbar = createRollbarInstance(serverAccessToken)
 }
 
+const clientAccessToken = "<%= options.clientAccessToken %>"
+
 let clientRollbar
-if (isValidToken(<%= options.clientAccessToken %>)) {
-  clientRollbar = createRollbarInstance("<%= options.clientAccessToken %>")
+if (isValidToken(clientAccessToken)) {
+  clientRollbar = createRollbarInstance(clientAccessToken)
 }
 
 function noop() {}
@@ -35,12 +39,12 @@ Object.defineProperties(
 const RollbarAdapter = Object.create(null)
 Object.defineProperty(RollbarAdapter, "instance", {
   get() {
-    if (isValidToken(<%= options.serverAccessToken %>)) {
+    if (isValidToken(serverAccessToken)) {
       if (process.server) {
         return serverRollbar
       }
     }
-    if (isValidToken(<%= options.clientAccessToken %>)) {
+    if (isValidToken(clientAccessToken)) {
       if (process.client) {
         return clientRollbar
       }
