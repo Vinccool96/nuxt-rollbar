@@ -53,3 +53,5 @@ Temporary Items
 .apdisk
 
 .vitest-result.json
+
+*.tgz

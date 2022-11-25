@@ -9,7 +9,7 @@ import Rollbar from "rollbar"
 import { getRollbarEnv } from "./io"
 import { ModuleOptions } from "./config"
 
-export { ModuleOptions }
+export type { ModuleOptions }
 
 const logger = consola.withScope("nuxt:rollbar")
 
@@ -32,6 +32,11 @@ export default defineNuxtModule<ModuleOptions>({
     config: {},
   },
   setup(options: ModuleOptions, nuxt: Nuxt) {
+    const { resolve } = createResolver(import.meta.url)
+    const templateDir = fileURLToPath(new URL("./template", import.meta.url))
+    nuxt.options.build.transpile.push(templateDir)
+
+    console.log(JSON.stringify(options))
     const isClientTokenValid = isTokenValid(options.clientAccessToken || null)
     const isServerTokenValid = isTokenValid(options.serverAccessToken || null)
 
@@ -39,10 +44,8 @@ export default defineNuxtModule<ModuleOptions>({
     //   return
     // }
 
-    const { resolve } = createResolver(import.meta.url)
-    const templateDir = fileURLToPath(new URL("./template", import.meta.url))
     addPluginTemplate({
-      src: resolve(templateDir, "rollbarClientPlugin.mjs"),
+      src: resolve(templateDir, "rollbarClientPlugin.ts"),
       options,
     })
 
