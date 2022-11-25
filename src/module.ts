@@ -1,6 +1,6 @@
 import { fileURLToPath } from "url"
 
-import { defineNuxtModule, addPlugin, createResolver } from "@nuxt/kit"
+import { addPluginTemplate, createResolver, defineNuxtModule } from "@nuxt/kit"
 import { Nuxt } from "@nuxt/schema"
 
 import consola from "consola"
@@ -43,9 +43,11 @@ export default defineNuxtModule<ModuleOptions>({
     // }
 
     const { resolve } = createResolver(import.meta.url)
-    const runtimeDir = fileURLToPath(new URL("./runtime", import.meta.url))
-    nuxt.options.build.transpile.push(runtimeDir)
-    addPlugin(resolve(runtimeDir, "rollbarClient"))
+    const templateDir = fileURLToPath(new URL("./template", import.meta.url))
+    addPluginTemplate({
+      src: resolve(templateDir, "rollbarClientPlugin.mjs"),
+      options,
+    })
 
     logger.debug(isClientTokenValid ? "Loaded in client side" : "Skip client side")
     logger.debug(isServerTokenValid ? "Loaded in server side" : "Skip server side")

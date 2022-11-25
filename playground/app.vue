@@ -2,4 +2,10 @@
   <div>Nuxt module playground!</div>
 </template>
 
-<script setup></script>
+<script>
+export default {
+  mounted () {
+    console.log(this.$rollbar)
+  }
+}
+</script>

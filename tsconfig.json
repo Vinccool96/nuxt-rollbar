@@ -1,3 +1,11 @@
 {
-  "extends": "./playground/.nuxt/tsconfig.json"
+  "extends": "./playground/.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "types": [
+      "node", "jest"
+    ]
+  }
 }

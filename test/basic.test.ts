@@ -1,7 +1,6 @@
 import { fileURLToPath } from "node:url"
-// @ts-ignore
-import { describe, expect, it, beforeEach } from "vitest"
-import { setup, $fetch } from "@nuxt/test-utils"
+import { describe, expect, it } from "vitest"
+import { $fetch, setup } from "@nuxt/test-utils"
 
 describe("basic", async function () {
   await setup({
@@ -10,7 +9,7 @@ describe("basic", async function () {
     build: true,
   })
 
-  it("renders the index page", async () => {
+  it("renders the index page", async function () {
     const html = await $fetch("/")
     expect(html).toContain("<div>Nuxt module playground!</div>")
   })
