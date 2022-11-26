@@ -6,6 +6,7 @@ export interface ModuleOptions {
   config?: Rollbar.Configuration
 }
 
+// @ts-ignore
 declare module "#app" {
   // noinspection JSUnusedGlobalSymbols
   interface NuxtApp {

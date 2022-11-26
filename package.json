@@ -12,13 +12,19 @@
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src",
+    "nuxt.config.ts",
+    "tsconfig.json",
+    ".env.default"
   ],
   "scripts": {
     "prepack": "nuxt-module-build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "install": "cp ./src/runtime/rollbarClient.mjs ./dist/runtime/rollbarClient.mjs",
+    "prepublish": "yarn run pack",
     "setup": "yarn run dev:prepare && yarn run dev:build",
     "try": "yarn run dev:prepare && yarn run dev:build && yarn run dev",
     "test": "vitest run",

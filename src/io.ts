@@ -6,7 +6,7 @@ interface EnvTypes {
 type env = keyof EnvTypes
 
 function getEnv<T extends env>(name: T): EnvTypes[T] {
-  return process.env[`NUXT_PUBLIC_ROLLBAR_${name}`]
+  return process.env[`NUXT_PUBLIC_ROLLBAR_${name.toUpperCase()}`]
 }
 
 export interface RollbarEnvTypes {

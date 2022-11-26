@@ -2,7 +2,7 @@ import Rollbar from "rollbar"
 import { defineNuxtPlugin } from "#app"
 
 const createRollbarInstance = function (accessToken) {
-  const config = JSON.parse(JSON.stringify(<% options.config %>))
+  const config = JSON.parse('<%= options.config %>')
   config.accessToken = accessToken
   return new Rollbar(config)
 }

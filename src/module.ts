@@ -27,16 +27,15 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    clientAccessToken: getRollbarEnv("server_key") || null,
+    clientAccessToken: getRollbarEnv("client_key") || null,
     serverAccessToken: getRollbarEnv("server_key") || null,
     config: {},
   },
   setup(options: ModuleOptions, nuxt: Nuxt) {
     const { resolve } = createResolver(import.meta.url)
-    const templateDir = fileURLToPath(new URL("./template", import.meta.url))
-    nuxt.options.build.transpile.push(templateDir)
+    const runtimeDir = fileURLToPath(new URL("./runtime", import.meta.url))
+    nuxt.options.build.transpile.push(runtimeDir)
 
-    console.log(JSON.stringify(options))
     const isClientTokenValid = isTokenValid(options.clientAccessToken || null)
     const isServerTokenValid = isTokenValid(options.serverAccessToken || null)
 
@@ -44,9 +43,13 @@ export default defineNuxtModule<ModuleOptions>({
     //   return
     // }
 
+    console.log(JSON.stringify(options))
     addPluginTemplate({
-      src: resolve(templateDir, "rollbarClientPlugin.ts"),
-      options,
+      src: resolve(runtimeDir, "rollbarClient.mjs"),
+      options: {
+        ...options,
+        config: JSON.stringify(options.config),
+      },
     })
 
     logger.debug(isClientTokenValid ? "Loaded in client side" : "Skip client side")
