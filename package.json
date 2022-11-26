@@ -23,8 +23,7 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-    "install": "cp ./src/runtime/rollbarClient.mjs ./dist/runtime/rollbarClient.mjs",
-    "prepublish": "yarn run pack",
+    "prepublish": "yarn pack",
     "setup": "yarn run dev:prepare && yarn run dev:build",
     "try": "yarn run dev:prepare && yarn run dev:build && yarn run dev",
     "test": "vitest run",
@@ -33,6 +32,7 @@
   "dependencies": {
     "@nuxt/kit": "latest",
     "consola": "^2.15.3",
+    "copy-deep": "^1.0.0",
     "rollbar": "^2.25.2"
   },
   "devDependencies": {
