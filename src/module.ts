@@ -1,6 +1,6 @@
 import { fileURLToPath } from "url"
 
-import { addPlugin, addPluginTemplate, createResolver, defineNuxtModule, isNuxt3 } from "@nuxt/kit"
+import { addPlugin, createResolver, defineNuxtModule, isNuxt3 } from "@nuxt/kit"
 import { Nuxt } from "@nuxt/schema"
 
 import { copyDeep } from "copy-deep"
@@ -23,10 +23,6 @@ export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: "nuxt-rollbar",
     configKey: "nuxtRollbar",
-    compatibility: {
-      // Semver version of supported nuxt versions
-      nuxt: "^3.0.0",
-    },
   },
   defaults: {
     clientAccessToken: getRollbarEnv("client_key") || null,
@@ -35,7 +31,6 @@ export default defineNuxtModule<ModuleOptions>({
   },
   setup(options: ModuleOptions, nuxt: Nuxt) {
     const realOptions = copyDeep(options)
-    console.log(JSON.stringify(nuxt.options.runtimeConfig))
     if (isNuxt3(nuxt)) {
       // @ts-ignore
       nuxt.options.runtimeConfig.public.nuxtRollbar = realOptions
@@ -47,9 +42,9 @@ export default defineNuxtModule<ModuleOptions>({
     const isClientTokenValid = isTokenValid(realOptions.clientAccessToken || null)
     const isServerTokenValid = isTokenValid(realOptions.serverAccessToken || null)
 
-    // if (!isClientTokenValid && !isServerTokenValid) {
-    //   return
-    // }
+    if (!isClientTokenValid && !isServerTokenValid) {
+      return
+    }
 
     const { resolve } = createResolver(import.meta.url)
     const runtimeDir = fileURLToPath(new URL("./runtime", import.meta.url))
@@ -72,5 +67,4 @@ export default defineNuxtModule<ModuleOptions>({
       // })
     }
   },
-  hooks: {},
 })

@@ -1,9 +1,12 @@
 import Rollbar from "rollbar"
+import { copyDeep } from "copy-deep"
+
 import { defineNuxtPlugin } from "#app"
+
 import { ModuleOptions } from "../config"
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const options: ModuleOptions = nuxtApp.payload.config.public.nuxtRollbar
+  const options: ModuleOptions = copyDeep(nuxtApp.payload.config.public.nuxtRollbar)
 
   function createRollbarInstance(accessToken: string) {
     const config = options.config || {}
