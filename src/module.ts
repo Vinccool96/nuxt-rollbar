@@ -6,7 +6,6 @@ import { Nuxt } from "@nuxt/schema"
 import { copyDeep } from "copy-deep"
 
 import consola from "consola"
-import Rollbar from "rollbar"
 
 import { getRollbarEnv } from "./io"
 import { ModuleOptions } from "./config"
@@ -55,16 +54,7 @@ export default defineNuxtModule<ModuleOptions>({
     logger.debug(isServerTokenValid ? "Loaded in server side" : "Skip server side")
 
     if (isServerTokenValid) {
-      const rollbar = Rollbar.init({
-        ...realOptions.config,
-        accessToken: realOptions.serverAccessToken as string | undefined,
-      })
-
-      rollbar.errorHandler()
-
-      // nuxt.hook("vue:error", (...args: Parameters<Parameters<typeof onErrorCaptured>[0]>) => {
-      //
-      // })
+      addPlugin(resolve(runtimeDir, "rollbarServerPlugin"))
     }
   },
 })
